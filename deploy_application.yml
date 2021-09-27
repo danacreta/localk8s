@@ -1,0 +1,112 @@
+---
+- name: deploy app with minikube
+  hosts: localhost
+  gather_facts: False
+
+  vars:
+
+   # ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    # app_name: HugoApp
+    # image_name: hugo-site
+    # image_tag: 1.0
+    replicas: 4
+  
+  pre_tasks:
+    - name: check the status of minikube.
+      command: minikube status
+      register: minikube_status
+      changed_when: false
+      ignore_errors: true
+    
+    - name: make sure to start minikube
+      fail:
+        msg: "Please run create_cluster first"
+      when: "not minikube_status.stdout or 'Running' not in minikube_status.stdout or 'Paused' in minikube_status.stdout"
+
+  tasks:
+    - include_vars: config.yml
+
+    - name: get existing image hash.
+      shell: |
+        eval $(minikube docker-env)
+        docker images -q {{ docker.image_name }}
+      register: image_hash
+      changed_when: false
+
+    - name: build image if it's not already built. 
+      shell: | 
+        eval $(minikube docker-env)
+        docker build -t {{ docker.image_name }}:{{ docker.image_tag }} ../.
+      when: not image_hash.stdout
+
+    ### TODO - push image to dockerhub ???
+
+    - name: create namespace for application.
+      community.kubernetes.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ k8s.namespace }}"
+        state: present
+
+    - name: deploy application.
+      community.kubernetes.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: "{{ k8s.name }}"
+            namespace: "{{ k8s.namespace }}"
+          spec:
+            replicas: "{{ replicas }}"
+            selector:
+              matchLabels:
+                app: "{{ k8s.name }}"
+            template:
+              metadata:
+                labels:
+                  app: "{{ k8s.name }}"
+              spec:
+                containers:
+                - name: "{{ k8s.name }}"
+                  image: "{{ docker.username }}/{{ docker.image_name }}:{{ docker.image_tag }}"
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                  - containerPort: 80
+        
+    - name: create app service
+      community.kubernetes.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "{{ k8s.name }}"
+            namespace: "{{ k8s.namespace }}"
+          spec:
+            selector:
+              app: "{{ k8s.name }}"
+            ports:
+            - protocol: TCP
+              port: 80
+              targetPort: 80
+            type: NodePort
+
+  # post_tasks:
+  #   - name: exposing App on the host via Minikube.
+  #     command: minikube service -n hugo-site  hugo-site --url
+  #     changed_when: false
+  #     register: minikube_service
+
+  #   - debug:
+  #       msg: "Hello Go URL: {{ minikube_service['stdout_lines'][0] }}"
+
+  #   - name: verify Hello Go is responding.
+  #     uri:
+  #       url: "{{ minikube_service['stdout_lines'][0] }}/test"
+  #       return_content: true
+  #     register: hello_go_response
+  #     failed_when: "'/test' not in hello_go_response.content"
+
+  #   - debug:
+  #       msg: "Testing URL Hello GO Requested: {{hello_go_response.content}} Status: {{hello_go_response.status}}"

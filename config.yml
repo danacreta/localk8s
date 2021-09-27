@@ -1,0 +1,9 @@
+docker:
+  username: danacreta
+  image_name: hugok8s
+  image_tag: 1
+
+k8s:
+  name: hugok8s
+  namespace: hugok8s
+  replicas: 3

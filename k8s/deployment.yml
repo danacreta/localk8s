@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hugok8s
+  namespace: hugok8s
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hugok8s
+  template:
+    metadata:
+      labels:
+        app: hugok8s
+    spec:
+      containers:
+      - name: hugok8s
+        image: danacreta/hugok8s:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      
