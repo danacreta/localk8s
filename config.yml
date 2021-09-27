@@ -1,6 +1,6 @@
 docker:
   username: danacreta
-  image_name: hugo-site
+  image_name: hugo-site-tom
   image_tag: v1
 
 k8s:

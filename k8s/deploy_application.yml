@@ -4,11 +4,6 @@
   gather_facts: False
 
   vars:
-
-   # ansible_python_interpreter: '{{ ansible_playbook_python }}'
-    # app_name: HugoApp
-    # image_name: hugo-site
-    # image_tag: 1.0
     replicas: 3
   
   pre_tasks:
@@ -24,7 +19,7 @@
       when: "not minikube_status.stdout or 'Running' not in minikube_status.stdout or 'Paused' in minikube_status.stdout"
 
   tasks:
-    - include_vars: config.yml
+    - include_vars: ../config.yml
 
     - name: get existing image hash.
       shell: |
@@ -36,7 +31,7 @@
     - name: build image if it's not already built. 
       shell: | 
         eval $(minikube docker-env)
-        docker build -t {{ docker.username }}/{{ docker.image_name }}:{{ docker.image_tag }} ../.
+        docker build -t {{ docker.username }}/{{ docker.image_name }}:{{ docker.image_tag }} ../../.
       when: not image_hash.stdout
 
   #   ### TODO - push image to dockerhub ???
