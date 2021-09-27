@@ -6,4 +6,3 @@ docker:
 k8s:
   name: hugok8s
   namespace: hugok8s
-  replicas: 3

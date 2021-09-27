@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#if [[ $# -ne 1 && $1 == @(create_cluster|deploy_application|destroy_cluster) ]]; then
 if [ "$#" -ne 1 -o \( "$1" != "create_cluster" -a "$1" != "deploy_application" -a "$1" != "destroy_cluster" \) ]; then
     echo "Please specify an action: create_cluster | deploy_application | destroy_cluster"
     exit 1
