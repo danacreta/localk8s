@@ -30,8 +30,8 @@ docker:
   image_tag: 
 
 k8s:
-  name: hugok8s-dev
-  namespace: hugok8s-dev
+  name: local8s-dev
+  namespace: local8s-dev
 
 ```
 4. run the script `local_k8s.sh` with one of the parameters: `create_cluster | deploy_application | destroy_cluster`
