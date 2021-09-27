@@ -1,0 +1,17 @@
+---
+- name: create cluster minikube
+  hosts: localhost
+  gather_facts: False
+
+  tasks:
+    - include_vars: config.yml
+
+    - name: delete service
+      command: kubectl delete service -n {{ k8s.namespace }} {{ k8s.name }}
+      ignore_errors: true
+
+    - name: delete deployment
+      command: kubectl delete deployment -n {{ k8s.namespace }} {{ k8s.name }}
+      ignore_errors: true
+
+    ### TODO delete namespace if different than default
