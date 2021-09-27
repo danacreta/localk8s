@@ -14,8 +14,8 @@ spec:
         app: hugok8s
     spec:
       containers:
-      - name: hugok8s
-        image: danacreta/hugok8s:v1
+      - name: hugo-site
+        image: danacreta/hugo-site:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

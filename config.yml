@@ -1,7 +1,7 @@
 docker:
   username: danacreta
-  image_name: hugok8s
-  image_tag: 1
+  image_name: hugo-site
+  image_tag: v1
 
 k8s:
   name: hugok8s
