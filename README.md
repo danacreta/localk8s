@@ -36,5 +36,6 @@ k8s:
 ```
 4. run the script `local_k8s.sh` with one of the parameters: `create_cluster | deploy_application | destroy_cluster`
 - `./local_k8s.sh create_cluster` - checks and starts minikube
+   TODO - install minikube and kubectl if not found
 - `./local_k8s.sh deploy_application` - deploy your application using minikube and docker image you've mentioned in `config.yml`
 - `./local_k8s.sh destroy_cluster` - destroys the deployment and service
