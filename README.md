@@ -40,3 +40,13 @@ k8s:
    TODO - install minikube and kubectl if not found
 - `./local_k8s.sh deploy_application` - deploy your application using minikube and docker image you've mentioned in `config.yml`
 - `./local_k8s.sh destroy_cluster` - destroys the deployment and service
+
+### TODO
+- do the actuall destroyng of the cluster in the yml file
+- Make it possible ro have more images to be deployed
+- Add more parameters in config - like port to be exposed
+- Make the `localk8s` as a standalone folder. Add inside it an apps folder where we should have the apps to be deployed (docker files and maybe deployment files allready created by dev user). Check for these deployment files and if they not exist then build them using vars in config
+- Better errors messages in case we don't find a docker file for example
+- in install script check for docker installation and install it if it's not there
+- add the possibility fr minikube to work with podman ?
+- add the option to use something else insted of minikube ( like k3d ? )
