@@ -1,5 +1,5 @@
 ---
-- name: create cluster minikube
+- name: destroy cluster minikube
   hosts: localhost
   gather_facts: False
 
@@ -15,3 +15,7 @@
       ignore_errors: true
 
     ### TODO delete namespace if different than default
+
+    - name: destroy cluster
+      command: minikube delete
+      ignore_errors: true
