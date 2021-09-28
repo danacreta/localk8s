@@ -31,7 +31,7 @@
     - name: build image if it's not already built. 
       shell: | 
         eval $(minikube docker-env)
-        docker build -t {{ docker.username }}/{{ docker.image_name }}:{{ docker.image_tag }} ../../.
+        docker build -t {{ docker.image_name }}:{{ docker.image_tag }} ../../.
       when: not image_hash.stdout
 
   #   ### TODO - push image to dockerhub ???
@@ -67,7 +67,7 @@
                 containers:
                 - name: hugo-site
                 #"{{ k8s.name }}"
-                  image: "{{ docker.username }}/{{ docker.image_name }}:{{ docker.image_tag }}"
+                  image: "{{ docker.image_name }}:{{ docker.image_tag }}"
                   #imagePullPolicy: Always
                   ports:
                   - containerPort: 80
