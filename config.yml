@@ -1,3 +1,8 @@
+env:
+  #todo - add k3d too
+  local_kube: minikube
+  #todo - add podman too
+  engine: docker 
 docker:
   image_name: 
   image_tag: 
@@ -5,3 +10,4 @@ docker:
 k8s:
   name: localk8s-dev
   namespace: localk8s-dev
+  port: 80
