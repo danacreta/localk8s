@@ -23,7 +23,7 @@ You can also use `install_requirements.sh` script from this repository.
 1. get the `localk8s` from this git repository
    `git clone https://github.com/danacreta/localk8s`
 2. move the new created folder into your dev project homefolder
-    `mv localk8s/ dev_folder/localk8s`
+    `mv localk8s/ dev_folder/localk8s` - TODO - let localk8s to be outside the preoject folder and add path to project folder in config 
 3. edit `config.yml` file. You can change `k8s` parameters in there or leave them as they are. It is mandatory to set the `docker` parameters.
 ```
 docker:
