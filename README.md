@@ -17,6 +17,7 @@ local Kubernetes environment, so developers can test their application deploymen
 - ansible-playbook - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html with plugin `community.kubernetes.k8s` (https://docs.ansible.com/ansible/latest/collections/community/kubernetes/k8s_module.html)
 
 Some of the above have their specific requirements, so please check their installation guides.
+You can also use `install_requirements.sh` script from this repository.
 
 ### Make it work
 1. get the `localk8s` from this git repository
