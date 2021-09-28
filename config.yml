@@ -1,8 +1,24 @@
-docker:
-  username: danacreta
-  image_name: hugo-site-tom
-  image_tag: v1
+env:
+  #todo - add k3d too
+  local_kube: minikube
+  #todo - add podman too
+  engine: docker 
 
-k8s:
-  name: hugok8s
-  namespace: hugok8s
+deploy:
+  - namespace: localk8s-dev
+  # deployment 1
+  - docker:
+      image_name: 
+      image_tag: 
+    k8s:
+      name: localk8s-dev1
+      namespace: localk8s-dev1
+      port: 80
+  # deployment 2
+  - docker:
+      image_name: 
+      image_tag: 
+    k8s:
+      name: localk8s-dev2
+      namespace: localk8s-dev2
+      port: 80
