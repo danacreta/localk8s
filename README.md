@@ -19,9 +19,10 @@ local Kubernetes environment, so developers can test their application deploymen
 Some of the above have their specific requirements, so please check their installation guides.
 
 ### Make it work
-1. get the `localk8s` from this git repository https://github.com/danacreta/localk8s
-2. copy the new created folder to your dev project homefolder
-    `cp -r localk8s myProjectFolder`
+1. get the `localk8s` from this git repository
+   `git clone https://github.com/danacreta/localk8s`
+2. move the new created folder into your dev project homefolder
+    `mv localk8s/ dev_folder/localk8s`
 3. edit `config.yml` file. You can change `k8s` parameters in there or leave them as they are. It is mandatory to set the `docker` parameters.
 ```
 docker:
