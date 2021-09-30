@@ -26,6 +26,7 @@
     eval $(minikube docker-env)
     docker build -t {{ engine_attr.image_name }}:{{ engine_attr.image_tag }} {{ image_file_path }}/.
   when: not image_hash.stdout
+  ignore_errors: true
 
 - name: Set container
   set_fact:
