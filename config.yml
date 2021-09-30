@@ -7,41 +7,35 @@ env:
   ## namespace for all that we deploy here
   namespace: localk8s-dev
 
-  # have folders for each deployment inside apps/ folder. 
-  # In this case we prioritize checking the yml deployment files in there over the config below.
-  # in this case we can choose not to specify here k8s names
-  # but we have to mandatory specify docker images that are used, because we are making checks
-  # We will use the folder names insite apps/ for their names in this case
-  #use_apps_folder: true
-
-## TODO here will be possibile to have an array of docker/k8s settings in order to be able to deploy multipple apps -- ?
 deploys:
   # deployment 1
-  - name: hugo-site
+  - name: my_deployment
     replicas: 3
     port: 80
     
     engine:
-    ## we can have multiple images for one deployment
-
     #image 1
-      - image_name: danacreta/hugo-site
+      - image_name: image_url
         image_tag: v1
         # dockerfile path 
-        file_path: /home/dana/example-site
+        file_path: path/to/docker/file
         port: 80
 
-      # image 2
-      # - image_name: image2
-      #   image_tag: v1
-      #   file_path:
-      #   port:
+       image 2
+       - image_name: image2
+         image_tag: v1
+         file_path:
+         port:
   
   # deployment 2
-  # - engine:
-  #     image_name: hugo-site
-  #     image_tag: v1
-  #   k8s:
-  #     name: localk8s-dev2
-  #     namespace: localk8s-dev2
-  #     port: 80
+  - name: second_deployment
+    replicas: 3
+    port: 80
+    
+    engine:
+    #image 1
+      - image_name: another_image
+        image_tag: v1
+        # dockerfile path 
+        file_path: path/to/another/docker/file
+        port: 80
