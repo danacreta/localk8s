@@ -1,0 +1,6 @@
+---
+- name: check images to be deployed
+  var:
+    engine_attr: "{{ item }}"
+  include_tasks: include/check_image.yml
+  loop: "{{ eng_images }}"

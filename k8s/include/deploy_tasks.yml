@@ -1,0 +1,12 @@
+---
+- name: deploy tasks
+  block:
+    - name: include images checks
+      vars:
+        engine_attr: "{{ item }}"
+      include_tasks: include/check_image.yml
+      loop: "{{ eng_images }}"
+
+    - name: include deployment
+      include_tasks: include/deploy.yml
+  when: eng_images[0] is defined and eng_images[0].image_name is defined

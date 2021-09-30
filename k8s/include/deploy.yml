@@ -1,0 +1,65 @@
+---
+- debug:
+    msg: "{{ eng_containers }}"
+- name: choose deployment file
+  stat:
+    path: "../../apps/{{ deploy_name }}/deployment.yml"
+  register: stat_result
+
+- name: deploy from file
+  community.kubernetes.k8s:
+    state: present
+    src: "../../apps/{{ deploy_name }}/deployment.yml"
+  when: stat_result.stat.exists
+
+- name: deploy from config
+  community.kubernetes.k8s:
+    state: present
+    wait_timeout: 60
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: "{{ deploy_name }}"
+        namespace: "{{ env.namespace }}"
+      spec:
+        replicas: 3
+        selector:
+          matchLabels:
+            app: "{{ deploy_name }}"
+        template:
+          metadata:
+            labels:
+              app: "{{ deploy_name }}"
+          spec:
+            containers: "{{ eng_containers | flatten }}"
+  when: not stat_result.stat.exists
+
+- name: create app service
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ deploy_name }}"
+        namespace: "{{ env.namespace }}"
+      spec:
+        selector:
+          app: "{{ deploy_name }}"
+        ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+        type: NodePort
+  when: not stat_result.stat.exists
+
+- name: exposing App on the host via .
+  command: "{{ env.local_kube }} service -n {{ env.namespace }} {{ deploy_name }} --url"
+  changed_when: false
+  register: localkube_service
+  when: not stat_result.stat.exists
+
+- debug:
+    msg: "Visit your site here - URL: {{ localkube_service['stdout_lines'][0] }}"
+  when: not stat_result.stat.exists

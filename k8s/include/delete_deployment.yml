@@ -1,0 +1,16 @@
+---
+- name: delete service
+  community.kubernetes.k8s:
+    state: absent
+    api_version: v1
+    kind: Service
+    namespace: "{{ env.namespace }}"
+    name: "{{ deploy_name }}"
+
+- name: delete deployment
+  community.kubernetes.k8s:
+    state: absent
+    api_version: v1
+    kind: Deployment
+    namespace: "{{ env.namespace }}"
+    name: "{{ deploy_name }}"

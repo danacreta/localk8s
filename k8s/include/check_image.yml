@@ -1,0 +1,41 @@
+---
+- name: get existing image hash
+  shell: |
+    eval $(minikube docker-env)
+    docker images -q {{ engine_attr.image_name }}
+  register: image_hash
+  changed_when: false
+
+- name: set image file path
+  set_fact:
+    image_file_path: "../apps/{{ deploy_name }}"
+    
+- name: check if image's file exists locally
+  stat:
+    path: "{{ image_file_path }}/Dockerfile"
+  register: stat_result
+  when: not image_hash.stdout
+
+- name: check if image's file exists elsewhere
+  set_fact:
+    image_file_path: "{{ engine_attr.file_path }}"
+  when: not image_hash.stdout and not stat_result.stat.exists
+
+- name: Build image
+  shell: | 
+    eval $(minikube docker-env)
+    docker build -t {{ engine_attr.image_name }}:{{ engine_attr.image_tag }} {{ image_file_path }}/.
+  when: not image_hash.stdout
+
+- name: Set container
+  set_fact:
+    current_container:
+      - name: "{{ deploy_name }}"
+        image: "{{ engine_attr.image_name }}:{{ engine_attr.image_tag }}"
+        ports:
+          - containerPort: 80
+          #"{{ engine_attr.port }}"
+  when: engine_attr.port | int > 0
+- name: Add to containers
+  set_fact:
+    eng_containers: "{{ eng_containers + [ current_container ] }}"
