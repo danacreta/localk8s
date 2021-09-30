@@ -45,8 +45,10 @@ In the `local_k8s` folder we have:
 - Creating a deployment
    - check the cluster status. If everything is fine we try to deploy.
    - check namespace (config: env.namespace) exists. Otherwise we create it
-   - for each item in config: deploys list we to deploy an app
-      - 
+   - for each item in config: deploys list we deploy an app
+     First, we check all images in the list config: deploys[i].engine. If it doesn't exists locally we look for a Dockerfile in the apps/myapp/ folder. If this file does not exists, we check the config var deploys[i].engine[j].file_path. After we decided for the path of the Dockerfile, we build the image. In the same time, for each image we add the needed container info for deploing it later to kubernetes.
+     Then we check if a deployment file exists in the apps/myapp/ folder. In this case we use this for deployment. Otherwise, we buid our own specification for app and service based on config variables.
+     
 
 ## Variables Description
 |                	| Variable   	| Choises/Defaults        	| Mandatory 	| Description                                               	|
