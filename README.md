@@ -38,7 +38,7 @@ In the `local_k8s` folder we have:
  - `./local_k8s.sh` - script for creating/destroing cluster / deploy app(s)
  - folder `k8s` - ansible playbooks for local_k8s script actions and also `include/` folder with included tasks in plybooks
  - folder `apps` - user can add a subfolder for each app to be deployed. Each folder app should have the same name as variable `deploys.name` in config (mandatory).
-   It can contain a `deployment.yml` file. In this case we will use this file for deployment of this app. For consistency, the user should add in config the namespace used in his file and image/s info - Not yet fully tested
+   It can contain a `deployment.yml` file. In this case we will use this file for deployment of this app. For consistency, the user should add in config the namespace used in his file and image/s info
    It can also contain a Dockerfile for creating the image to be used in container. It is not yet finalized this feature - we will need subfolders with Dockerfile for each container. In case the image/s setted in config are not available at the run time, we try to build the image using these Dockerfiles.
    
 ### How it works
