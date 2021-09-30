@@ -41,6 +41,12 @@ In the `local_k8s` folder we have:
    It can contain a `deployment.yml` file. In this case we will use this file for deployment of this app - Not yet fully tested
    It can also contain a Dockerfile for creating the image to be used in container. It is not yet finalized this feature - we will need subfolders with Dockerfile for each container. In case the image/s setted in config are not available at the run time, we try to build the image using these Dockerfiles.
    
+### How it works
+- Creating a deployment
+   - check the cluster status. If everything is fine we try to deploy.
+   - check namespace (config: env.namespace) exists. Otherwise we create it
+   - for each item in config: deploys list we to deploy an app
+      - 
 
 ## Variables Description
 |                	| Variable   	| Choises/Defaults        	| Mandatory 	| Description                                               	|
