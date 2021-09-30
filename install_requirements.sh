@@ -5,6 +5,8 @@
 # Written by @DanaCreta
 #######################################
 
+### TODO INSTALL DOCKER
+
 ## Update packages and Upgrade system
 sudo apt-get update -y
 

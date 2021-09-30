@@ -1,20 +1,21 @@
 ---
-- name: create cluster minikube
+- name: create cluster
   hosts: localhost
   gather_facts: False
 
-  ## TODO - should we install minikube & kubectl and other resources?
   tasks:
-    - name: check the status of minikube.
-      command: minikube status
-      register: minikube_status
+    - include_vars: ../config.yml
+
+    - name: check the status of {{ env.local_kube }}.
+      command: "{{ env.local_kube }} status"
+      register: kube_status
       changed_when: false
       ignore_errors: true
 
-    - name: start minikube if it's not running.
-      command: minikube start
-      when: "not minikube_status.stdout or 'Running' not in minikube_status.stdout"
+    - name: start {{ env.local_kube }} if it's not running.
+      command: "{{ env.local_kube }} start"
+      when: "not kube_status.stdout or 'Running' not in kube_status.stdout"
 
-    - name: unpause minikube if it's paused.
-      command: minikube unpause
-      when: "'Paused' in minikube_status.stdout"
+    - name: unpause {{ env.local_kube }} if it's paused.
+      command: "{{ env.local_kube }} unpause"
+      when: "'Paused' in kube_status.stdout"

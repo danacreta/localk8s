@@ -1,21 +1,39 @@
 ---
-- name: destroy cluster minikube
+- name: destroy cluster
   hosts: localhost
   gather_facts: False
 
   tasks:
     - include_vars: ../config.yml
 
-    - name: delete service
-      command: kubectl delete service -n {{ k8s.namespace }} {{ k8s.name }}
-      ignore_errors: true
+    - name: delete deployments
+      vars:
+        deploy_name: "{{ deploy.name }}"
 
-    - name: delete deployment
-      command: kubectl delete deployment -n {{ k8s.namespace }} {{ k8s.name }}
-      ignore_errors: true
+      include_tasks: include/delete_deployment.yml
+
+      loop: "{{ deploys | flatten }}"
+      loop_control:
+        loop_var: deploy
+
+    # - name: delete service
+    #   command: kubectl delete service -n {{ k8s.namespace }} {{ k8s.name }}
+    #   ignore_errors: true
+
+    # - name: delete deployment
+    #   command: kubectl delete deployment -n {{ k8s.namespace }} {{ k8s.name }}
+    #   ignore_errors: true
 
     ### TODO delete namespace if different than default
 
+    - name: delete namespace
+      community.kubernetes.k8s:
+        state: absent
+        api_version: v1
+        kind: Namespace
+        name: "{{ env.namespace }}"
+
     - name: destroy cluster
-      command: minikube delete
-      ignore_errors: true
+      command: "{{ env.local_kube }} delete"
+      #ignore_errors: true
+

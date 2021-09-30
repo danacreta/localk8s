@@ -1,3 +1,2 @@
-kubektl
-minikube-linux-amd64
 config.yml
+apps/*
