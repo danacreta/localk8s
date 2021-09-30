@@ -23,31 +23,32 @@ You can also use `install_requirements.sh` script from this repository.
 ### Make it work
 1. get the `localk8s` from this git repository
    `git clone https://github.com/danacreta/localk8s`
-2. move the new created folder into your dev project homefolder
-    `mv localk8s/ dev_folder/localk8s` - TODO - let localk8s to be outside the preoject folder and add path to project folder in config 
-3. edit `config.yml` file. You can change `k8s` parameters in there or leave them as they are. It is mandatory to set the `docker` parameters.
-```
-docker:
-  image_name: 
-  image_tag: 
-
-k8s:
-  name: localk8s-dev
-  namespace: localk8s-dev
-
-```
+2. create a folder `my_app_name` in `local_k8s/apps` folder. You can add here a Dockerfile and a deployment.yml for your app OR
+3. set variables in config.yml file
 4. run the script `local_k8s.sh` with one of the parameters: `create_cluster | deploy_application | destroy_cluster`
 - `./local_k8s.sh create_cluster` - checks and starts minikube
-   TODO - install minikube and kubectl if not found
-- `./local_k8s.sh deploy_application` - deploy your application using minikube and docker image you've mentioned in `config.yml`
-- `./local_k8s.sh destroy_cluster` - destroys the deployment and service
+- `./local_k8s.sh deploy_application` - deploy your application using your files in spps folder or variables you've mentioned in `config.yml`
+- `./local_k8s.sh destroy_cluster` - destroys the cluster
+
+# Variables Description
+|                	| Variable   	| Choises/Defaults        	| Mandatory 	| Description                                               	|
+|----------------	|------------	|-------------------------	|-----------	|-----------------------------------------------------------	|
+| env            	|            	|                         	|           	| global variables                                          	|
+|                	| local_kube 	| minikube(\*k3d)/minikube 	| yes       	| local Kubernetes                                          	|
+|                	| engine     	| docker(\*podman/docker)  	| yes       	| container engine to be used                               	|
+|                	| namespace  	| any/default             	| yes       	| namespace to be used for deployment                       	|
+| deploys        	|            	|                         	|           	| list of apps to be deployed                               	|
+|                	| name       	| any                     	| yes       	| name of deployment. Used for app name, service name       	|
+|                	| replicas   	| min 1/3                 	| yes       	|                                                           	|
+|                	| port       	| any/80                  	| yes       	| service port. Not yet functional. We might need a list    	|
+| deploys.engine 	|            	|                         	|           	| A list of vars for multiple containers used in deployment 	|
+|                	| image_name 	| any                     	| yes       	|                                                           	|
+|                	| image_tag  	| any                     	| yes       	|                                                           	|
+|                	| file_path  	| any                     	| no        	| path to Dockerfile if we have to build the image          	|
+|                	| port       	| any/80                  	| yes       	| containerPort                                             	|
+\* to be added
 
 ### TODO
-- do the actuall destroyng of the cluster in the yml file
-- Make it possible ro have more images to be deployed
-- Add more parameters in config - like port to be exposed
-- Make the `localk8s` as a standalone folder. Add inside it an apps folder where we should have the apps to be deployed (docker files and maybe deployment files allready created by dev user). Check for these deployment files and if they not exist then build them using vars in config
-- Better errors messages in case we don't find a docker file for example
 - in install script check for docker installation and install it if it's not there
 - add the possibility fr minikube to work with podman ?
 - add the option to use something else insted of minikube ( like k3d ? )

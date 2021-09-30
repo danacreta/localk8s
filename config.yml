@@ -12,7 +12,7 @@ env:
   # in this case we can choose not to specify here k8s names
   # but we have to mandatory specify docker images that are used, because we are making checks
   # We will use the folder names insite apps/ for their names in this case
-  use_apps_folder: true
+  #use_apps_folder: true
 
 ## TODO here will be possibile to have an array of docker/k8s settings in order to be able to deploy multipple apps -- ?
 deploys:
@@ -20,6 +20,7 @@ deploys:
   - name: hugo-site
     replicas: 3
     port: 80
+    
     engine:
     ## we can have multiple images for one deployment
 

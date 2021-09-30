@@ -16,16 +16,6 @@
       loop_control:
         loop_var: deploy
 
-    # - name: delete service
-    #   command: kubectl delete service -n {{ k8s.namespace }} {{ k8s.name }}
-    #   ignore_errors: true
-
-    # - name: delete deployment
-    #   command: kubectl delete deployment -n {{ k8s.namespace }} {{ k8s.name }}
-    #   ignore_errors: true
-
-    ### TODO delete namespace if different than default
-
     - name: delete namespace
       community.kubernetes.k8s:
         state: absent
