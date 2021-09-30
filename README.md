@@ -73,3 +73,4 @@ Creating a deployment
 - in install script check for docker installation and install it if it's not there
 - add the possibility fr minikube to work with podman ?
 - add the option to use something else insted of minikube ( like k3d ? )
+- better error messages
