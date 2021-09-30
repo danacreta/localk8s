@@ -24,13 +24,13 @@ You can also use `install_requirements.sh` script from this repository.
 1. get the `localk8s` from this git repository
    `git clone https://github.com/danacreta/localk8s`
 2. create a folder `my_app_name` in `local_k8s/apps` folder. You can add here a Dockerfile and a deployment.yml for your app OR
-3. set variables in config.yml file
+3. set variables in config.yml file. Check their description <a href="#variables-description">here</a>
 4. run the script `local_k8s.sh` with one of the parameters: `create_cluster | deploy_application | destroy_cluster`
 - `./local_k8s.sh create_cluster` - checks and starts minikube
 - `./local_k8s.sh deploy_application` - deploy your application using your files in spps folder or variables you've mentioned in `config.yml`
 - `./local_k8s.sh destroy_cluster` - destroys the cluster
 
-# Variables Description
+## Variables Description
 |                	| Variable   	| Choises/Defaults        	| Mandatory 	| Description                                               	|
 |----------------	|------------	|-------------------------	|-----------	|-----------------------------------------------------------	|
 | env            	|            	|                         	|           	| global variables                                          	|
