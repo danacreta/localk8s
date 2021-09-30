@@ -46,6 +46,7 @@ You can also use `install_requirements.sh` script from this repository.
 |                	| image_tag  	| any                     	| yes       	|                                                           	|
 |                	| file_path  	| any                     	| no        	| path to Dockerfile if we have to build the image          	|
 |                	| port       	| any/80                  	| yes       	| containerPort                                             	|
+
 \* to be added
 
 ### TODO
