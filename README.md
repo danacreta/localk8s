@@ -12,6 +12,7 @@ local Kubernetes environment, so developers can test their application deploymen
 - just Ubuntu for now
 - Container or virtual machine manager - Docker (just Docker for now) 
     * We assume that the developer is using ubuntu with docker allready installed and in the root folder of the project a Dockerfile exists.
+    * Check docker installation here: https://docs.docker.com/engine/install/ubuntu/
 - minikube - https://minikube.sigs.k8s.io/docs/start/
 - kubectl - https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 - ansible-playbook - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html with plugin `community.kubernetes.k8s` (https://docs.ansible.com/ansible/latest/collections/community/kubernetes/k8s_module.html)
